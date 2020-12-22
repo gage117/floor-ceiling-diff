@@ -1,8 +1,8 @@
 const perf = require('execution-time')();
 
-const results = [];
-
 let average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+const floorResults = [];
 
 for (let i = 0; i < 10000; i++) {
     perf.start();
@@ -11,8 +11,24 @@ for (let i = 0; i < 10000; i++) {
     num = Math.floor(num);
 
     perfResult = perf.stop();
-    results.push(perfResult.time)
+    floorResults.push(perfResult.time)
 }
-console.log(Math.ceil)
 
-console.log(average(results));
+const ceilResults = [];
+
+for (let i = 0; i < 10000; i++) {
+    perf.start();
+
+    let num = 2.5;
+    num = Math.ceil(num);
+
+    perfResult = perf.stop();
+    ceilResults.push(perfResult.time)
+}
+const floorAverage = average(floorResults);
+const ceilAverage = average(ceilResults);
+const diff = floorAverage - ceilAverage;
+
+console.log(`Floor Average: ${floorAverage}`);
+console.log(`Ceil Average: ${ceilAverage}`);
+console.log(`Time diff (floor - ceil): ${diff}`);
